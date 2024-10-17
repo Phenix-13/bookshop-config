@@ -3,22 +3,19 @@ server:
 
 spring:
   application:
-    name: "library"
+    name: library
   profiles:
-    active: "prod"
+    active: prod
   datasource:
-    url: jdbc:mysql://localhost:3308/librarydb?createDatabasefNotExist=true
+    url: jdbc:mysql://localhost:3308/librarydb?createDatabaseIfNotExist=true
     username: root
     password: root
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-  sql:
-    init:
-      mode: always
   config:
-    import: "optional:configserver:http://localhost:8071/"
+    import: optional:configserver:http://localhost:8071/
 
 management:
   endpoints:
@@ -26,12 +23,9 @@ management:
       exposure:
         include: "*"
   endpoint:
-    shutdown:
-      enabled: true
-  info:
-    env:
-      enabled: true
-
+    health:
+      probes:
+        enabled: true
 eureka:
   instance:
     preferIpAddress: true
